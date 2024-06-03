@@ -1,28 +1,22 @@
-import {useState} from 'react';
 import {
     ChakraProvider,
     Box,
     Flex,
     Text,
     Button,
-    Avatar,
-    IconButton,
-    Drawer,
-    DrawerBody,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    useDisclosure,
-    Stack, Image, VStack, HStack
+    Image, VStack, useColorMode,
 } from '@chakra-ui/react';
-import {HamburgerIcon, ChevronDownIcon, ArrowForwardIcon} from '@chakra-ui/icons';
+import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./App.css"
+import Header from "./components/Header.jsx";
+import {render} from "react-dom";
+import {useState} from "react";
+
+
 function App() {
-    const {isOpen, onOpen, onClose} = useDisclosure();
-    const [placement, setPlacement] = useState('right');
     const settings = {
         dots: true,
         infinite: true,
@@ -31,6 +25,8 @@ function App() {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,
+        nextArrow: <SampleNextArrow/>,
+        prevArrow: <SamplePrevArrow/>,
         responsive: [
             {
                 breakpoint: 1024,
@@ -51,58 +47,105 @@ function App() {
             }
         ]
     };
+    const cards = [
+        {
+            image: "https://via.placeholder.com/300x200?text=J.P.Morgan",
+            title: "Investment Banking",
+            company: "JPMorgan Chase",
+            details: "Banking & Financial Services",
+            duration: "3-4 hours",
+            level: "Advanced"
+        },
+        {
+            image: "https://via.placeholder.com/300x200?text=lululemon",
+            title: "Omnichannel Marketing",
+            company: "lululemon",
+            details: "Marketing",
+            duration: "6-7 hours",
+            level: "Intermediate"
+        },
+        {
+            image: "https://via.placeholder.com/300x200?text=PepsiCo",
+            title: "Sales",
+            company: "PepsiCo",
+            details: "Sales",
+            duration: "2-3 hours",
+            level: "Introductory"
+        },
+        {
+            image: "https://via.placeholder.com/300x200?text=accenture",
+            title: "Data Analytics and Visualization",
+            company: "Accenture North America",
+            details: "Data",
+            duration: "2-3 hours",
+            level: "Intermediate"
+        },
+        {
+            image: "https://via.placeholder.com/300x200?text=Red+Bull",
+            title: "On-Premise Sales",
+            company: "Red Bull",
+            details: "Sales",
+            duration: "1-2 hours",
+            level: "Introductory"
+        }
+    ];
+    const second_settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        nextArrow: <SimulationsNextArrow/>,
+        prevArrow: <SimulationsPrevArrow/>,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    initialSlide: 1
+                }
+            }
+        ]
+    };
+    const bg = {light: '#E6F0FA', dark: "gray.700"};
+    const [appColorMode, setAppColorMode] = useState('light');
+    const renderHeader = (colorMode) => {
+        setAppColorMode(colorMode);
+    }
 
     return (
         <ChakraProvider>
-            <Box bg="white" px={4} boxShadow="md">
-                <Flex h={16} alignItems="center" justifyContent="space-between">
-                    <Box>
-                        <Flex alignItems="center">
-                            <Box as="img" src="https://via.placeholder.com/50" alt="Logo" h={8}/>
-                            <Text fontSize="2xl" fontWeight="bold" ml={2}>
-                                VE
-                            </Text>
-                        </Flex>
-                    </Box>
+            {/*<Header  colorMode={colorMode} toggleColorMode={toggleColorMode} />*/}
+            <Header renderHeader={renderHeader}></Header>
 
-                    <Flex display={{base: 'none', md: 'flex'}} alignItems="center">
-                        <Button variant="outline" colorScheme="yellow" rightIcon={<ChevronDownIcon/>}>
-                            Explore
-                        </Button>
-                        <Text mx={4}>Blog</Text>
-                        <Text mx={4}>For Employers</Text>
-                        <Text mx={4}>For Educators</Text>
-                    </Flex>
-
-                    <Flex alignItems="center">
-                        <Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}>
-                            Sign Up
-                        </Button>
-                        <Avatar display={{base: 'none', md: 'block'}} size="sm" name="User"
-                                src="https://via.placeholder.com/40"/>
-                        <IconButton
-                            display={{base: 'flex', md: 'none'}}
-                            aria-label="Open Menu"
-                            icon={<HamburgerIcon/>}
-                            onClick={onOpen}
-                        />
-                    </Flex>
-                </Flex>
-            </Box>
-
-            <Box bg="#E6F0FA" p={8}>
-                <Flex direction={{base: 'column', md: 'row'}} align="center" justify="space-between" maxW="1200px"
+            <Box bg={bg[appColorMode]} p={8}>
+                <Flex direction={{base: 'column', md: 'row'}} align="center" justify="space-between"
+                      maxW="1200px"
                       mx="auto">
                     <VStack align="start" spacing={4} maxW="600px">
-                        <Text fontSize={{base: '3xl', md: '5xl'}} fontWeight="bold" color="#1A202C">
+                        <Text fontSize={{base: '3xl', md: '5xl'}} fontWeight="bold">
                             Build confidence.<br/> Get the job.
                         </Text>
-                        <Text fontSize={{base: 'md', md: 'lg'}} color="#4A5568">
-                            Explore careers and prepare for the job with hundreds of free job simulations designed by
-                            the world's top employers.
+                        <Text fontSize={{base: 'md', md: 'lg'}}>
+                            Explore careers and prepare for the job with hundreds of free job simulations
+                            designed by
+                            the world top employers.
                         </Text>
                         <Button colorScheme="blue" size="lg"
-                                rightIcon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                rightIcon={<svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 24 24"
                                                 stroke="currentColor" width="24" height="24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                           d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -149,29 +192,95 @@ function App() {
                 </Slider>
             </Box>
 
-            <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
-                <DrawerOverlay/>
-                <DrawerContent>
-                    <DrawerCloseButton/>
-                    <DrawerHeader>Menu</DrawerHeader>
-                    <DrawerBody>
-                        <Stack spacing={4}>
-                            <Button variant="outline" colorScheme="yellow" rightIcon={<ChevronDownIcon/>}>
-                                Explore
-                            </Button>
-                            <Text>Blog</Text>
-                            <Text>For Employers</Text>
-                            <Text>For Educators</Text>
-                            <Button colorScheme="yellow">Sign Up</Button>
-                            <Avatar size="sm" name="User" src="https://via.placeholder.com/40"/>
-                        </Stack>
-                    </DrawerBody>
-                </DrawerContent>
-            </Drawer>
+            <Box p={8}>
+                <Text fontSize="2xl" fontWeight="bold" mb={4} textAlign="center">
+                    Explore our free job simulations
+                </Text>
+                <Slider {...second_settings}>
+                    {cards.map((card, index) => (
+                        <Box key={index} p={2}>
+                            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
+                                <Flex justifyContent="center" alignItems="center">
+                                    <Image src={card.image} alt={card.title}/>
+                                </Flex>
+                                <Box p={4}>
+                                    <Text fontWeight="bold" fontSize="lg">{card.company}</Text>
+                                    <Text mt={2}>{card.title}</Text>
+                                    <Text mt={2} fontSize="sm" color="gray.500">{card.details}</Text>
+                                    <Text mt={2} fontSize="sm" color="gray.500">{card.duration}</Text>
+                                    <Text mt={2} fontSize="sm" color="gray.500">{card.level}</Text>
+                                </Box>
+                            </Box>
+                        </Box>
+                    ))}
+                </Slider>
+            </Box>
 
 
         </ChakraProvider>
     );
+
+    function SampleNextArrow(props) {
+        const {className, style, onClick} = props;
+        return (
+            <div
+                className={className}
+                style={{...style, display: "block", right: "10px"}} // Настройка позиции кнопки
+                onClick={onClick}
+            />
+        );
+    }
+
+    function SamplePrevArrow(props) {
+        const {className, style, onClick} = props;
+        return (
+            <div
+                className={className}
+                style={{...style, display: "block", left: "10px", zIndex: 1}} // Настройка позиции кнопки
+                onClick={onClick}
+            />
+        );
+    }
+
+    function SimulationsNextArrow(props) {
+        const {style, onClick} = props;
+        return (
+            <div
+                style={{
+                    ...style,
+                    display: "block",
+                    position: "absolute",
+                    right: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    zIndex: 2,
+                    cursor: "pointer",
+
+                }}
+                onClick={onClick}
+            ><ChevronRightIcon style={{fontSize: '36px'}}></ChevronRightIcon></div>
+        );
+    }
+
+    function SimulationsPrevArrow(props) {
+        const {style, onClick} = props;
+        return (
+            <div
+                style={{
+                    ...style,
+                    display: "block",
+                    position: "absolute",
+                    left: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    zIndex: 2,
+                    cursor: "pointer"
+                }}
+                onClick={onClick}
+            ><ChevronLeftIcon style={{fontSize: '36px'}}></ChevronLeftIcon></div>
+        );
+    }
+
 }
 
 export default App;
