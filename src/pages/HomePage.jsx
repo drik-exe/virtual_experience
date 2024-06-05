@@ -14,7 +14,7 @@ import "../App.css"
 import Header from "../components/Header.jsx";
 import {useState} from "react";
 
-function HomePage() {
+function HomePage(props) {
     const settings = {
         dots: true,
         infinite: true,
@@ -118,16 +118,13 @@ function HomePage() {
         ]
     };
     const bg = {light: '#E6F0FA', dark: "gray.700"};
-    const [appColorMode, setAppColorMode] = useState('light');
-    const renderHeader = (colorMode) => {
-        setAppColorMode(colorMode);
-    }
+
 
     return (
         <ChakraProvider>
-            <Header renderHeader={renderHeader}></Header>
 
-            <Box bg={bg[appColorMode]} p={8}>
+
+            <Box bg={bg[props.appColorMode]} p={8}>
                 <Flex direction={{base: 'column', md: 'row'}} align="center" justify="space-between"
                       maxW="1200px"
                       mx="auto">

@@ -14,7 +14,8 @@ import {
 } from "@chakra-ui/react";
 import {ChevronDownIcon, HamburgerIcon, MoonIcon, SunIcon} from "@chakra-ui/icons";
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
+import Footer from "./Footer.jsx";
 
 function Header(props) {
     const [isHovering, setIsHovering] = useState(false);
@@ -116,6 +117,10 @@ function Header(props) {
                 </DrawerContent>
             </Drawer>
             {props.renderHeader(colorMode)}
+
+            <Outlet></Outlet>
+
+            <Footer/>
         </>
     )
 }
