@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import {ChevronDownIcon, HamburgerIcon, MoonIcon, SunIcon} from "@chakra-ui/icons";
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 function Header(props) {
     const [isHovering, setIsHovering] = useState(false);
@@ -80,9 +81,10 @@ function Header(props) {
                     </Flex>
 
                     <Flex alignItems="center">
-                        <Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}>
+                        <Link to="/signup"><Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}>
                             Sign Up
-                        </Button>
+                        </Button></Link>
+
                         <Avatar display={{base: 'none', md: 'block'}} size="sm" name="User"
                                 src="https://via.placeholder.com/40"/>
                         <IconButton
@@ -107,7 +109,7 @@ function Header(props) {
                             <Text>Blog</Text>
                             <Text>For Employers</Text>
                             <Text>For Educators</Text>
-                            <Button colorScheme="yellow">Sign Up</Button>
+                            <Link to="signup"><Button colorScheme="yellow">Sign Up</Button></Link>
                             <Avatar size="sm" name="User" src="https://via.placeholder.com/40"/>
                         </Stack>
                     </DrawerBody>
