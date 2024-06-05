@@ -121,8 +121,6 @@ function HomePage(props) {
 
     return (
         <ChakraProvider>
-
-
             <Box bg={bg[props.appColorMode]} p={8}>
                 <Flex direction={{base: 'column', md: 'row'}} align="center" justify="space-between"
                       maxW="1200px"
