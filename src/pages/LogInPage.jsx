@@ -14,8 +14,7 @@ import {
 } from "@chakra-ui/react";
 
 import {Link as DomLink} from "react-router-dom";
-
-function SignUpPage() {
+function LogInPage() {
 
     return (
         <ChakraProvider>
@@ -28,16 +27,6 @@ function SignUpPage() {
                     w="full"
                 >
                     <VStack spacing={4} align="stretch">
-                        <HStack spacing={4}>
-                            <FormControl id="first-name" isRequired>
-                                <FormLabel>First Name</FormLabel>
-                                <Input placeholder="First Name"/>
-                            </FormControl>
-                            <FormControl id="last-name" isRequired>
-                                <FormLabel>Last Name</FormLabel>
-                                <Input placeholder="Last Name"/>
-                            </FormControl>
-                        </HStack>
                         <FormControl id="email" isRequired>
                             <FormLabel>Email</FormLabel>
                             <Input type="email" placeholder="Email"/>
@@ -46,16 +35,12 @@ function SignUpPage() {
                             <FormLabel>Password (Minimum 8 Characters)</FormLabel>
                             <Input type="password" placeholder="Password"/>
                         </FormControl>
-                        <Text fontSize="sm" color="gray.600">
-                            By signing up you agree to our <Link color="blue.500">terms of use</Link>, and acknowledge
-                            you have read the <Link color="blue.500">privacy notice</Link>.
-                        </Text>
                         <Button colorScheme="blue" size="lg" w="full">
-                            Sign Up
+                            Log In
                         </Button>
                         <Flex justify="center" mt={4}>
                             <Text fontSize="sm" color="gray.600">
-                                Already have an account? <DomLink to="/login"><Link color="blue.500">Log In</Link></DomLink>
+                                Still don't have an account? <DomLink to="/signup"><Link color="blue.500">Sign Up</Link></DomLink>
                             </Text>
                         </Flex>
                     </VStack>
@@ -65,4 +50,4 @@ function SignUpPage() {
     );
 }
 
-export default SignUpPage;
+export default LogInPage;

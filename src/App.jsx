@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage.jsx";
 import Header from "./components/Header.jsx";
 import React, {useState} from "react";
 import SignUpPage from "./pages/SignUpPage.jsx";
+import LogInPage from "./pages/LogInPage.jsx";
 
 
 function App() {
@@ -21,11 +22,12 @@ function App() {
     return (
         <ChakraProvider>
             <Routes>
-                <Route path="/" element={ <Header renderHeader={renderHeader}></Header> }>
-                    <Route index element={<HomePage appColorMode={appColorMode} />}></Route>
+                <Route path="/" element={<Header renderHeader={renderHeader}></Header>}>
+                    <Route index element={<HomePage appColorMode={appColorMode}/>}></Route>
                     {/*остальные адреса в этой вложенности можно без слеша*/}
                 </Route>
-                <Route path="/signup" element={ <SignUpPage/> }></Route>
+                <Route path="/signup" element={<SignUpPage/>}></Route>
+                <Route path="/login" element={<LogInPage/>}></Route>
             </Routes>
 
         </ChakraProvider>
