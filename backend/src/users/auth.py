@@ -21,6 +21,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
 
 def token_to_cookie(user_email: EmailStr, response: Response):
     access_token = create_access_token(data={"sub": user_email})
-    token_expires = timedelta(minutes=30)
-    response.set_cookie(key="access_token", value=f"token={access_token}", httponly=True,
-                        expires=int(token_expires.total_seconds()))
+    # token_expires = timedelta(minutes=30)
+    # response.set_cookie(key="access_token", value=f"value={access_token}", httponly=True,
+    #                     expires=int(token_expires.total_seconds()), max_age=int(token_expires.total_seconds()))
+    return access_token

@@ -31,9 +31,8 @@ async def register_user(response: Response, user: UserCreate, db: AsyncSession =
             session.add(new_user)
             # await session.flush()
 
-        token_to_cookie(user.email, response)
-        return {"message": "User created successfully"}
-
+        token = token_to_cookie(user.email, response)
+        return {"message": "User created successfully", "token": token, "token_type": "bearer"}
 
 
 @router.post("/login")
@@ -44,8 +43,8 @@ async def login_user(response: Response, form_data: UserLogin,
         user_in_db = result.scalar_one_or_none()
 
         if user_in_db and pwd_context.verify(form_data.password, user_in_db.hashed_password):
-            token_to_cookie(form_data.email, response)
-            return {"message": "Logged in successfully"}
+            token = token_to_cookie(form_data.email, response)
+            return {"message": "Logged in successfully", "token": token, "token_type": "bearer"}
         else:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
