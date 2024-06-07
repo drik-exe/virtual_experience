@@ -91,8 +91,8 @@ function SignUpPage() {
                             </Button>
                             <Flex justify="center" mt={4}>
                                 <Text fontSize="sm" color="gray.600">
-                                    Already have an account? <DomLink to="/login"><Link color="blue.500">Log
-                                    In</Link></DomLink>
+                                    Already have an account? <Link as={DomLink} to="/login" color="blue.500">Log
+                                    In</Link>
                                 </Text>
                             </Flex>
                         </VStack>
