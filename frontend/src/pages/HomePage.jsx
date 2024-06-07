@@ -118,7 +118,6 @@ function HomePage(props) {
     };
     const bg = {light: '#E6F0FA', dark: "gray.700"};
 
-
     return (
         <ChakraProvider>
             <Box bg={bg[props.appColorMode]} p={8}>
