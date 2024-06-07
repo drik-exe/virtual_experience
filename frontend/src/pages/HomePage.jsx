@@ -133,7 +133,7 @@ function HomePage(props) {
                             designed by
                             the world top employers.
                         </Text>
-                        <Button colorScheme="blue" size="lg"
+                        <Button colorScheme="yellow" size="lg"
                                 rightIcon={<svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 24 24"
                                                 stroke="currentColor" width="24" height="24">
@@ -143,7 +143,7 @@ function HomePage(props) {
                             Get Started
                         </Button>
                     </VStack>
-                    <Image src="https://via.placeholder.com/400" alt="Illustration" boxSize="400px"
+                    <Image src="src/media/main-logo.png" alt="Illustration" boxSize="400px"
                            objectFit="contain"/>
                 </Flex>
             </Box>

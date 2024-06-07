@@ -13,7 +13,7 @@ import {
     Text, useColorMode, useDisclosure
 } from "@chakra-ui/react";
 import {ChevronDownIcon, HamburgerIcon, MoonIcon, SunIcon} from "@chakra-ui/icons";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Link, Outlet} from "react-router-dom";
 import Footer from "./Footer.jsx";
 
@@ -23,11 +23,28 @@ function Header(props) {
     const {colorMode, toggleColorMode} = useColorMode();
     const {isOpen, onOpen, onClose} = useDisclosure();
     const [placement, setPlacement] = useState('right');
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userAvatar, setUserAvatar] = useState("src/media/user-none.png");
 
     const MousePress = () => {
         setIsHovering(!isHovering);
     };
 
+    const checkAuthStatus = () => {
+        const token = localStorage.getItem('accessToken');
+        setIsAuthenticated(!!token); // Установка состояния в true, если токен есть
+        if (token) {
+            // Здесь можно установить ссылку на аватар пользователя, если у вас есть такая информация
+            // Например: setUserAvatar('path-to-user-avatar.jpg');
+        }
+    };
+
+    // Используем useEffect для проверки статуса аутентификации при монтировании компонента
+    useEffect(() => {
+        checkAuthStatus();
+        // Если у вас есть структура API для проверки текущего пользователя,
+        // вызовите её здесь, чтобы получить более точные данные о пользователе.
+    }, []);
 
     return (
         <>
@@ -36,7 +53,7 @@ function Header(props) {
                 <Flex h={16} alignItems="center" justifyContent="space-between">
                     <Box>
                         <Flex alignItems="center">
-                            <Box as="img" src="https://via.placeholder.com/50" alt="Logo" h={8}/>
+                            <Box as="img" src="src/media/main-logo.png" alt="Logo" h={8}/>
                             <Text fontSize="2xl" fontWeight="bold" ml={2}>
                                 VE
                             </Text>
@@ -82,12 +99,22 @@ function Header(props) {
                     </Flex>
 
                     <Flex alignItems="center">
-                        <Link to="/signup"><Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}>
-                            Sign Up
-                        </Button></Link>
+                        {!isAuthenticated ? (
+                            <Link to="/signup">
+                                <Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}>
+                                    Sign Up
+                                </Button>
+                            </Link>
+                        ) : (
+                            <Avatar
+                                display={{base: 'none', md: 'block'}}
+                                size="sm"
+                                name="User"
+                                borderRadius="0"
+                                src={userAvatar}
+                            />
+                        )}
 
-                        <Avatar display={{base: 'none', md: 'block'}} size="sm" name="User"
-                                src="https://via.placeholder.com/40"/>
                         <IconButton
                             display={{base: 'flex', md: 'none'}}
                             aria-label="Open Menu"
@@ -110,8 +137,11 @@ function Header(props) {
                             <Text>Blog</Text>
                             <Text>For Employers</Text>
                             <Text>For Educators</Text>
-                            <Link to="signup"><Button colorScheme="yellow">Sign Up</Button></Link>
-                            <Avatar size="sm" name="User" src="https://via.placeholder.com/40"/>
+                            {!isAuthenticated ? (
+                                <Link to="signup"><Button colorScheme="yellow">Sign Up</Button></Link>
+                            ) : (
+                                <Avatar size="sm" name="User" borderRadius="0" src="src/media/user-none.png"/>
+                            )}
                         </Stack>
                     </DrawerBody>
                 </DrawerContent>
