@@ -9,8 +9,8 @@ class User(Base):
     __tablename__ = 'users'
 
     user_id = Column(Integer, primary_key=True, autoincrement=True)
-    first_name: Mapped[str] = Column(String(50), nullable=False, unique=True)
-    last_name: Mapped[str] = Column(String(50), nullable=False, unique=True)
+    first_name: Mapped[str] = Column(String(50), nullable=False)
+    last_name: Mapped[str] = Column(String(50), nullable=False)
     email: str = Column(String(100), nullable=False, unique=True)
     hashed_password = Column(Text, nullable=False)
     is_active = Column(Boolean, default=True)

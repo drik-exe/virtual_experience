@@ -31,6 +31,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 from src.database import Base
 from src.users.models import User
+from src.jobs.models import Job, Partner
 
 target_metadata = Base.metadata
 

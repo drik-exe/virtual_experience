@@ -86,7 +86,7 @@ function SignUpPage() {
                                 acknowledge
                                 you have read the <Link color="blue.500">privacy notice</Link>.
                             </Text>
-                            <Button colorScheme="blue" size="lg" w="full" type="submit">
+                            <Button colorScheme="yellow" size="lg" w="full" type="submit">
                                 Sign Up
                             </Button>
                             <Flex justify="center" mt={4}>

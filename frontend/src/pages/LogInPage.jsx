@@ -66,7 +66,7 @@ function LogInPage() {
                                 <Input type="password" placeholder="Password" value={password}
                                        onChange={(e) => setPassword(e.target.value)}/>
                             </FormControl>
-                            <Button colorScheme="blue" size="lg" w="full" type="submit">
+                            <Button colorScheme="yellow" size="lg" w="full" type="submit">
                                 Log In
                             </Button>
                             <Flex justify="center" mt={4}>
