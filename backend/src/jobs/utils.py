@@ -3,7 +3,7 @@ import uuid
 from fastapi import UploadFile
 
 
-async def save_image(file: UploadFile, directory="../../../media"):
+async def save_image(file: UploadFile, directory="../../../frontend/media"):
     filename = str(uuid.uuid4()) + os.path.splitext(file.filename)[1]
 
     base_dir = os.path.dirname(__file__)

@@ -21,3 +21,17 @@ class JobCreateSchema(BaseModel):
 
 class PartnerCreateSchema(BaseModel):
     name: str
+
+
+class JobGetSchema(BaseModel):
+    job_id: int
+    image_filename: Optional[str]
+    title: str
+    company: str
+    details: str
+    duration: timedelta
+    level: str
+    price: float
+
+    class Config:
+        from_attributes = True

@@ -11,6 +11,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../App.css"
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 
 function HomePage(props) {
@@ -44,48 +46,6 @@ function HomePage(props) {
             }
         ]
     };
-    const cards = [
-        {
-            image: "https://via.placeholder.com/300x200?text=J.P.Morgan",
-            title: "Investment Banking",
-            company: "JPMorgan Chase",
-            details: "Banking & Financial Services",
-            duration: "3-4 hours",
-            level: "Advanced"
-        },
-        {
-            image: "https://via.placeholder.com/300x200?text=lululemon",
-            title: "Omnichannel Marketing",
-            company: "lululemon",
-            details: "Marketing",
-            duration: "6-7 hours",
-            level: "Intermediate"
-        },
-        {
-            image: "https://via.placeholder.com/300x200?text=PepsiCo",
-            title: "Sales",
-            company: "PepsiCo",
-            details: "Sales",
-            duration: "2-3 hours",
-            level: "Introductory"
-        },
-        {
-            image: "https://via.placeholder.com/300x200?text=accenture",
-            title: "Data Analytics and Visualization",
-            company: "Accenture North America",
-            details: "Data",
-            duration: "2-3 hours",
-            level: "Intermediate"
-        },
-        {
-            image: "https://via.placeholder.com/300x200?text=Red+Bull",
-            title: "On-Premise Sales",
-            company: "Red Bull",
-            details: "Sales",
-            duration: "1-2 hours",
-            level: "Introductory"
-        }
-    ];
     const second_settings = {
         dots: true,
         infinite: true,
@@ -117,6 +77,33 @@ function HomePage(props) {
         ]
     };
     const bg = {light: '#E6F0FA', dark: "gray.700"};
+    const [cards, setCards] = useState([]);
+    const [partnersImg, setPartnersImg] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/jobs/get_jobs');
+                setCards(response.data); // Предположим, что API возвращает объект с полем jobs, содержащим массив работ
+            } catch (error) {
+                console.error("Ошибка при получении данных:", error);
+
+            }
+        };
+        const fetchPartnerImg = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/jobs/get_partners');
+                setPartnersImg(response.data); // Предположим, что API возвращает объект с полем jobs, содержащим массив работ
+            } catch (error) {
+                console.error("Ошибка при получении данных:", error);
+
+            }
+        };
+        fetchData();
+        fetchPartnerImg();
+    }, []);
+
+
 
     return (
         <ChakraProvider>
@@ -149,36 +136,16 @@ function HomePage(props) {
             </Box>
             <Box bg="black" py={8}>
                 <Slider {...settings}>
-                    <Box px={2}>
-                        <Flex justifyContent="center" alignItems="center">
-                            <Image src="https://via.placeholder.com/100x50?text=Walmart" alt="Walmart"/>
-                        </Flex>
-                    </Box>
-                    <Box px={2}>
-                        <Flex justifyContent="center" alignItems="center">
-                            <Image src="https://via.placeholder.com/100x50?text=lululemon" alt="lululemon"/>
-                        </Flex>
-                    </Box>
-                    <Box px={2}>
-                        <Flex justifyContent="center" alignItems="center">
-                            <Image src="https://via.placeholder.com/100x50?text=J.P.Morgan" alt="J.P.Morgan"/>
-                        </Flex>
-                    </Box>
-                    <Box px={2}>
-                        <Flex justifyContent="center" alignItems="center">
-                            <Image src="https://via.placeholder.com/100x50?text=RedBull" alt="RedBull"/>
-                        </Flex>
-                    </Box>
-                    <Box px={2}>
-                        <Flex justifyContent="center" alignItems="center">
-                            <Image src="https://via.placeholder.com/100x50?text=BCG" alt="BCG"/>
-                        </Flex>
-                    </Box>
-                    <Box px={2}>
-                        <Flex justifyContent="center" alignItems="center">
-                            <Image src="https://via.placeholder.com/100x50?text=Bank+of+America" alt="Bank of America"/>
-                        </Flex>
-                    </Box>
+                    {partnersImg.map((partnersImg, index) => (
+                        <Box key={index} px={2}>
+                            <Flex justifyContent="center" alignItems="center">
+                                <Image src={`/media/${partnersImg.image_filename}`} alt={`${partnersImg.name}`}
+                                       maxW="100px"
+                                       maxH="50px"
+                                       objectFit="cover"/>
+                            </Flex>
+                        </Box>
+                    ))}
                 </Slider>
             </Box>
 
@@ -191,7 +158,10 @@ function HomePage(props) {
                         <Box key={index} p={2}>
                             <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
                                 <Flex justifyContent="center" alignItems="center">
-                                    <Image src={card.image} alt={card.title}/>
+                                    <Image src={`/media/${card.image_filename}`} alt={card.title}
+                                           maxW="300px"
+                                           maxH="200px"
+                                           objectFit="cover"/>
                                 </Flex>
                                 <Box p={4}>
                                     <Text fontWeight="bold" fontSize="lg">{card.company}</Text>
