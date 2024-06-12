@@ -16,6 +16,10 @@ import {ChevronDownIcon, HamburgerIcon, MoonIcon, SunIcon} from "@chakra-ui/icon
 import {useEffect, useState} from "react";
 import {Link, Outlet} from "react-router-dom";
 import Footer from "./Footer.jsx";
+import axios from "axios";
+import {SiNetflix} from "react-icons/si";
+
+axios.defaults.withCredentials = true;
 
 function Header(props) {
     const [isHovering, setIsHovering] = useState(false);
@@ -30,20 +34,29 @@ function Header(props) {
         setIsHovering(!isHovering);
     };
 
-    const checkAuthStatus = () => {
-        const token = localStorage.getItem('accessToken');
-        setIsAuthenticated(!!token); // Установка состояния в true, если токен есть
-        if (token) {
+    const checkAuthStatus = async () => {
+        const user = await axios.get('https://127.0.0.1:8000/users/me');
+        setIsAuthenticated(!!user);
+        console.log(user);
+        if (user) {
             // Здесь можно установить ссылку на аватар пользователя, если у вас есть такая информация
             // Например: setUserAvatar('path-to-user-avatar.jpg');
         }
     };
 
-    // Используем useEffect для проверки статуса аутентификации при монтировании компонента
+    const handleLogout = async () => {
+        try {
+            await axios.post('https://127.0.0.1:8000/users/logout');
+            setIsAuthenticated(false);
+        } catch (error) {
+            console.error("Ошибка при выходе:", error);
+        }
+    };
+
+
     useEffect(() => {
         checkAuthStatus();
-        // Если у вас есть структура API для проверки текущего пользователя,
-        // вызовите её здесь, чтобы получить более точные данные о пользователе.
+
     }, []);
 
     return (
@@ -106,13 +119,19 @@ function Header(props) {
                                 </Button>
                             </Link>
                         ) : (
-                            <Avatar
-                                display={{base: 'none', md: 'block'}}
-                                size="sm"
-                                name="User"
-                                borderRadius="0"
-                                src={userAvatar}
-                            />
+                            <Flex>
+                                <Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}
+                                        onClick={handleLogout}>
+                                    Выйти
+                                </Button>
+                                <Avatar
+                                    display={{base: 'none', md: 'block'}}
+                                    size="sm"
+                                    name="User"
+                                    borderRadius="0"
+                                    src={userAvatar}
+                                ></Avatar>
+                            </Flex>
                         )}
 
                         <IconButton
@@ -146,7 +165,9 @@ function Header(props) {
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
-            {props.renderHeader(colorMode)}
+            {
+                props.renderHeader(colorMode)
+            }
 
             <Outlet></Outlet>
 

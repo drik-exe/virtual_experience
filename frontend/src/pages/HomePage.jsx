@@ -83,7 +83,7 @@ function HomePage(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/jobs/get_jobs');
+                const response = await axios.get('https://127.0.0.1:8000/jobs/get_jobs');
                 setCards(response.data); // Предположим, что API возвращает объект с полем jobs, содержащим массив работ
             } catch (error) {
                 console.error("Ошибка при получении данных:", error);
@@ -92,7 +92,7 @@ function HomePage(props) {
         };
         const fetchPartnerImg = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/jobs/get_partners');
+                const response = await axios.get('https://127.0.0.1:8000/jobs/get_partners');
                 setPartnersImg(response.data); // Предположим, что API возвращает объект с полем jobs, содержащим массив работ
             } catch (error) {
                 console.error("Ошибка при получении данных:", error);

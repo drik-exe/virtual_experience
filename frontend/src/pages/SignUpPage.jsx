@@ -13,14 +13,19 @@ import {
     Link,
 } from "@chakra-ui/react";
 
-import {Link as DomLink} from "react-router-dom";
+import {Link as DomLink, useNavigate} from "react-router-dom";
 import axios from "axios";
+
+
+axios.defaults.withCredentials = true;
 
 function SignUpPage() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Предотвратить стандартную отправку формы
@@ -33,17 +38,12 @@ function SignUpPage() {
         };
 
         try {
-            // Используем axios для отправки POST запроса
-            const response = await axios.post('http://127.0.0.1:8000/users/register', formData);
-            // Обработка успешного ответа
+            const response = await axios.post('https://127.0.0.1:8000/users/register', formData);
             console.log('User registered:', response.data);
-            localStorage.setItem('accessToken', response.data.token);
-            // Вы можете здесь добавить дополнительную логику,
-            // например, перенаправление пользователя на страницу входа
+            setIsAuthenticated(true);
+            navigate('/');  // Перенаправление на домашнюю страницу при успешном логине
         } catch (error) {
-            // Обработка ошибок при отправке формы
             console.error('Error registering user:', error.response.data);
-            // Показать сообщение об ошибке пользователю
         }
     };
 
@@ -86,9 +86,11 @@ function SignUpPage() {
                                 acknowledge
                                 you have read the <Link color="blue.500">privacy notice</Link>.
                             </Text>
-                            <Button colorScheme="yellow" size="lg" w="full" type="submit">
-                                Sign Up
-                            </Button>
+                            <DomLink to="/">
+                                <Button colorScheme="yellow" size="lg" w="full" type="submit">
+                                    Sign Up
+                                </Button>
+                            </DomLink>
                             <Flex justify="center" mt={4}>
                                 <Text fontSize="sm" color="gray.600">
                                     Already have an account? <Link as={DomLink} to="/login" color="blue.500">Log

@@ -13,36 +13,32 @@ import {
     Link,
 } from "@chakra-ui/react";
 
-import {Link as DomLink} from "react-router-dom";
+import {Link as DomLink, useNavigate} from "react-router-dom";
 import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 function LogInPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Предотвратить стандартную отправку формы
 
-        const formData = {
-            email: email,
-            password: password,
-        };
+        const formData = { email, password };
 
         try {
-            // Используем axios для отправки POST запроса
-            const response = await axios.post('http://127.0.0.1:8000/users/login', formData);
-            // Обработка успешного ответа
+            const response = await axios.post('https://127.0.0.1:8000/users/login', formData);
             console.log('User logged in:', response.data);
-            localStorage.setItem('accessToken', response.data.token);
-            // Вы можете здесь добавить дополнительную логику,
-            // например, перенаправление пользователя на страницу входа
+            setIsAuthenticated(true);
+            navigate('/');  // Перенаправление на домашнюю страницу при успешном логине
         } catch (error) {
-            // Обработка ошибок при отправке формы
             console.error('Error logging user:', error.response.data);
-            // Показать сообщение об ошибке пользователю
         }
-
     };
+
 
     return (
         <ChakraProvider>
@@ -66,12 +62,12 @@ function LogInPage() {
                                 <Input type="password" placeholder="Password" value={password}
                                        onChange={(e) => setPassword(e.target.value)}/>
                             </FormControl>
-                            <Button colorScheme="yellow" size="lg" w="full" type="submit">
-                                Log In
-                            </Button>
+                                <Button colorScheme="yellow" size="lg" w="full" type="submit">
+                                    Log In
+                                </Button>
                             <Flex justify="center" mt={4}>
                                 <Text fontSize="sm" color="gray.600">
-                                    Still don't have an account? <Link as={DomLink} to="/signup" color="blue.500">Sign
+                                    Still don't have an account? <Link as={DomLink} to="/signup" color="yellow.500">Sign
                                     Up</Link>
                                 </Text>
                             </Flex>
