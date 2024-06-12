@@ -104,7 +104,6 @@ function HomePage(props) {
     }, []);
 
 
-
     return (
         <ChakraProvider>
             <Box bg={bg[props.appColorMode]} p={8}>
@@ -113,12 +112,11 @@ function HomePage(props) {
                       mx="auto">
                     <VStack align="start" spacing={4} maxW="600px">
                         <Text fontSize={{base: '3xl', md: '5xl'}} fontWeight="bold">
-                            Build confidence.<br/> Get the job.
+                            Укрепите уверенность.<br/>Получите работу.
                         </Text>
                         <Text fontSize={{base: 'md', md: 'lg'}}>
-                            Explore careers and prepare for the job with hundreds of free job simulations
-                            designed by
-                            the world top employers.
+                            Изучите профессии и подготовьтесь к работе с помощью сотен бесплатных симуляторов работы,
+                            разработанных ведущими работодателями мира.
                         </Text>
                         <Button colorScheme="yellow" size="lg"
                                 rightIcon={<svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -127,7 +125,7 @@ function HomePage(props) {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                                           d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                                 </svg>}>
-                            Get Started
+                            Начать
                         </Button>
                     </VStack>
                     <Image src="src/media/main-logo.png" alt="Illustration" boxSize="400px"
@@ -151,7 +149,7 @@ function HomePage(props) {
 
             <Box p={8}>
                 <Text fontSize="2xl" fontWeight="bold" mb={4} textAlign="center">
-                    Explore our free job simulations
+                    Изучить наши бесплатные симуляции работы
                 </Text>
                 <Slider {...second_settings}>
                     {cards.map((card, index) => (

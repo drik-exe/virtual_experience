@@ -79,25 +79,20 @@ function Header(props) {
                                         rightIcon={<ChevronDownIcon
                                             transform={(isHovering) ? 'rotate(0deg)' : 'rotate(270deg)'}/>}
                                         onClick={MousePress}>
-                                Explore
+                                Изучить
                             </MenuButton>
                             <MenuList>
-                                <MenuGroup title="Job Simulations">
-                                    <MenuItem>Banking & Financial Services</MenuItem>
-                                    <MenuItem>Software Engineering</MenuItem>
-                                    <MenuItem>Law</MenuItem>
-                                    <MenuItem>Consulting</MenuItem>
+                                <MenuGroup title="Симуляции работы">
+                                    <MenuItem>Банк и Финансы</MenuItem>
+                                    <MenuItem>ИТ</MenuItem>
+                                    <MenuItem>Закон</MenuItem>
                                 </MenuGroup>
-                                <MenuDivider/>
-                                <MenuGroup title="Career Paths">
-                                    <MenuItem>Software Engineering</MenuItem>
-                                    <MenuItem>Investment Banking</MenuItem>
-                                </MenuGroup>
+                                {/*<MenuDivider/>*/}
                             </MenuList>
                         </Menu>
-                        <Text mx={4}>Blog</Text>
-                        <Text mx={4}>For Employers</Text>
-                        <Text mx={4}>For Educators</Text>
+                        <Text mx={4}>Блог</Text>
+                        <Text mx={4}>Для работодателей</Text>
+                        <Text mx={4}>Для педагогов</Text>
                         <IconButton
                             ml={2}
                             icon={colorMode === 'dark' ? <SunIcon/> : <MoonIcon/>}
@@ -115,7 +110,7 @@ function Header(props) {
                         {!isAuthenticated ? (
                             <Link to="/signup">
                                 <Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}>
-                                    Sign Up
+                                    Регистрация
                                 </Button>
                             </Link>
                         ) : (
@@ -147,19 +142,38 @@ function Header(props) {
                 <DrawerOverlay/>
                 <DrawerContent>
                     <DrawerCloseButton/>
-                    <DrawerHeader>Menu</DrawerHeader>
+                    <DrawerHeader>Меню</DrawerHeader>
                     <DrawerBody>
                         <Stack spacing={4}>
-                            <Button variant="outline" colorScheme="yellow" rightIcon={<ChevronDownIcon/>}>
-                                Explore
-                            </Button>
-                            <Text>Blog</Text>
-                            <Text>For Employers</Text>
-                            <Text>For Educators</Text>
+                            <Menu>
+                                <MenuButton as={Button} variant="outline" colorScheme="yellow"
+                                            rightIcon={<ChevronDownIcon
+                                                transform={(isHovering) ? 'rotate(0deg)' : 'rotate(270deg)'}/>}
+                                            onClick={MousePress}>
+                                    Изучить
+                                </MenuButton>
+                                <MenuList>
+                                    <MenuGroup title="Симуляции работы">
+                                        <MenuItem>Банк и Финансы</MenuItem>
+                                        <MenuItem>ИТ</MenuItem>
+                                        <MenuItem>Закон</MenuItem>
+                                    </MenuGroup>
+                                    {/*<MenuDivider/>*/}
+                                </MenuList>
+                            </Menu>
+                            <Text>Блог</Text>
+                            <Text>Для работодателей</Text>
+                            <Text>Для преподавателей</Text>
                             {!isAuthenticated ? (
-                                <Link to="signup"><Button colorScheme="yellow">Sign Up</Button></Link>
+                                <Link to="signup"><Button colorScheme="yellow">Регистрация</Button></Link>
                             ) : (
-                                <Avatar size="sm" name="User" borderRadius="0" src="src/media/user-none.png"/>
+                                <Flex>
+                                    <Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}
+                                            onClick={handleLogout}>
+                                        Выйти
+                                    </Button>
+                                    <Avatar size="sm" name="User" borderRadius="0" src="src/media/user-none.png"/>
+                                </Flex>
                             )}
                         </Stack>
                     </DrawerBody>

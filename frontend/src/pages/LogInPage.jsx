@@ -53,22 +53,21 @@ function LogInPage() {
                     <form onSubmit={handleSubmit}>
                         <VStack spacing={4} align="stretch">
                             <FormControl id="email" isRequired>
-                                <FormLabel>Email</FormLabel>
-                                <Input type="email" placeholder="Email" value={email}
+                                <FormLabel>Почта</FormLabel>
+                                <Input type="email" placeholder="Почта" value={email}
                                        onChange={(e) => setEmail(e.target.value)}/>
                             </FormControl>
                             <FormControl id="password" isRequired>
-                                <FormLabel>Password (Minimum 8 Characters)</FormLabel>
-                                <Input type="password" placeholder="Password" value={password}
+                                <FormLabel>Пароль</FormLabel>
+                                <Input type="password" placeholder="Пароль" value={password}
                                        onChange={(e) => setPassword(e.target.value)}/>
                             </FormControl>
                                 <Button colorScheme="yellow" size="lg" w="full" type="submit">
-                                    Log In
+                                    Войти
                                 </Button>
                             <Flex justify="center" mt={4}>
                                 <Text fontSize="sm" color="gray.600">
-                                    Still don't have an account? <Link as={DomLink} to="/signup" color="yellow.500">Sign
-                                    Up</Link>
+                                    Все еще нет аккаунта? <Link as={DomLink} to="/signup" color="yellow.500">Зарегистрируйся!</Link>
                                 </Text>
                             </Flex>
                         </VStack>

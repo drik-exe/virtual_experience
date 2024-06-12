@@ -61,40 +61,40 @@ function SignUpPage() {
                         <VStack spacing={4} align="stretch">
                             <HStack spacing={4}>
                                 <FormControl id="first-name" isRequired>
-                                    <FormLabel>First Name</FormLabel>
-                                    <Input placeholder="First Name" value={firstName}
+                                    <FormLabel>Фамилия</FormLabel>
+                                    <Input placeholder="Фамилия" value={firstName}
                                            onChange={(e) => setFirstName(e.target.value)}/>
                                 </FormControl>
                                 <FormControl id="last-name" isRequired>
-                                    <FormLabel>Last Name</FormLabel>
-                                    <Input placeholder="Last Name" value={lastName}
+                                    <FormLabel>Имя</FormLabel>
+                                    <Input placeholder="Имя" value={lastName}
                                            onChange={(e) => setLastName(e.target.value)}/>
                                 </FormControl>
                             </HStack>
                             <FormControl id="email" isRequired>
-                                <FormLabel>Email</FormLabel>
-                                <Input type="email" placeholder="Email" value={email}
+                                <FormLabel>Почта</FormLabel>
+                                <Input type="email" placeholder="Почта" value={email}
                                        onChange={(e) => setEmail(e.target.value)}/>
                             </FormControl>
                             <FormControl id="password" isRequired>
-                                <FormLabel>Password (Minimum 8 Characters)</FormLabel>
-                                <Input type="password" placeholder="Password" value={password}
+                                <FormLabel>Пароль</FormLabel>
+                                <Input type="password" placeholder="Пароль" value={password}
                                        onChange={(e) => setPassword(e.target.value)}/>
                             </FormControl>
                             <Text fontSize="sm" color="gray.600">
-                                By signing up you agree to our <Link color="blue.500">terms of use</Link>, and
-                                acknowledge
-                                you have read the <Link color="blue.500">privacy notice</Link>.
+                                Подписываясь, вы соглашаетесь с нашими <Link color="yellow.500">условиями
+                                использования</Link>, и
+                                соглашаетесь,
+                                что прочитал наше <Link color="yellow.500">соглашение о конфиденциальности</Link>.
                             </Text>
                             <DomLink to="/">
                                 <Button colorScheme="yellow" size="lg" w="full" type="submit">
-                                    Sign Up
+                                    Зарегестрироваться
                                 </Button>
                             </DomLink>
                             <Flex justify="center" mt={4}>
                                 <Text fontSize="sm" color="gray.600">
-                                    Already have an account? <Link as={DomLink} to="/login" color="blue.500">Log
-                                    In</Link>
+                                    Уже есть аккаунт? <Link as={DomLink} to="/login" color="yellow.500">Войдите</Link>
                                 </Text>
                             </Flex>
                         </VStack>
