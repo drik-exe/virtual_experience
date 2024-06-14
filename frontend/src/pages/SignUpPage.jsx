@@ -87,11 +87,11 @@ function SignUpPage() {
                                 соглашаетесь,
                                 что прочитал наше <Link color="yellow.500">соглашение о конфиденциальности</Link>.
                             </Text>
-                            <DomLink to="/">
+
                                 <Button colorScheme="yellow" size="lg" w="full" type="submit">
                                     Зарегестрироваться
                                 </Button>
-                            </DomLink>
+
                             <Flex justify="center" mt={4}>
                                 <Text fontSize="sm" color="gray.600">
                                     Уже есть аккаунт? <Link as={DomLink} to="/login" color="yellow.500">Войдите</Link>

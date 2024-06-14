@@ -86,7 +86,7 @@ async def get_free_jobs(db: AsyncSession = Depends(get_session)):
         return jobs
 
 
-@router.get("/specializations", response_model=List[JobGetSchema])
+@router.get("/job_by_specializations", response_model=List[JobGetSchema])
 async def get_jobs_by_specializations(specialization: str, db: AsyncSession = Depends(get_session)):
     async with db as session:
         async with session.begin():
@@ -115,8 +115,8 @@ async def get_jobs_by_specializations(specialization: str, db: AsyncSession = De
         return jobs
 
 
-@router.get("/get_specialization")
-async def get_specialization(db: AsyncSession = Depends(get_session)):
+@router.get("/get_specializations")
+async def get_specializations(db: AsyncSession = Depends(get_session)):
     async with db as session:
         async with session.begin():
             query = (
