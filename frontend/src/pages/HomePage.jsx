@@ -83,7 +83,7 @@ function HomePage(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://127.0.0.1:8000/jobs/get_jobs');
+                const response = await axios.get('https://127.0.0.1:8000/jobs/get_free_jobs');
                 setCards(response.data); // Предположим, что API возвращает объект с полем jobs, содержащим массив работ
             } catch (error) {
                 console.error("Ошибка при получении данных:", error);
@@ -162,11 +162,11 @@ function HomePage(props) {
                                            objectFit="cover"/>
                                 </Flex>
                                 <Box p={4}>
-                                    <Text fontWeight="bold" fontSize="lg">{card.company}</Text>
+                                    <Text fontWeight="bold" fontSize="lg">{card.company_name}</Text>
                                     <Text mt={2}>{card.title}</Text>
                                     <Text mt={2} fontSize="sm" color="gray.500">{card.details}</Text>
                                     <Text mt={2} fontSize="sm" color="gray.500">{card.duration}</Text>
-                                    <Text mt={2} fontSize="sm" color="gray.500">{card.level}</Text>
+                                    <Text mt={2} fontSize="sm" color="gray.500">{card.level} | {card.specialization}</Text>
                                 </Box>
                             </Box>
                         </Box>

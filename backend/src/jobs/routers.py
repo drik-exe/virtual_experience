@@ -2,20 +2,14 @@ import json
 from typing import List
 
 from fastapi import APIRouter, Depends, UploadFile, HTTPException, File, Form
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import ValidationError
-
-from jobs.models import Job, Partner
-from jobs.utils import save_image
-from jobs.schemas import JobCreateSchema, JobGetSchema
-from src.users.models import User
-from src.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from passlib.context import CryptContext
-from datetime import timedelta
-from users.auth import create_access_token, token_to_cookie
-from users.schemas import UserCreate, UserLogin
+
+from jobs.models import Job, Partner
+from jobs.schemas import JobCreateSchema, JobGetSchema
+from jobs.utils import save_image
+from src.database import get_session
 
 router = APIRouter(
     prefix="/jobs",
@@ -28,11 +22,12 @@ ALLOWED_MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"]
 @router.post("/create_job")
 async def create_job(job: str = Form(..., description='''{
     "title": "Senior Python Developer",
-    "company": "Example Corp",
+    "company": "1",
     "details": "We are looking for a Senior Python Developer...",
     "duration": "P2W",
     "level": "Продвинутый",
-    "price": 75000.00}'''),
+    "price": 75000.00,
+    "specialization": "ИТ"}'''),
                      file: UploadFile = File(...),
                      db: AsyncSession = Depends(get_session)):
     if file.content_type not in ALLOWED_MIME_TYPES:
@@ -51,24 +46,85 @@ async def create_job(job: str = Form(..., description='''{
             new_job = Job(
                 image_filename=await save_image(file),
                 title=job_obj.title,
-                company=job_obj.company,
+                company_id=job_obj.company,
                 details=job_obj.details,
                 duration=job_obj.duration,
                 level=job_obj.level.value,
                 price=job_obj.price,
+                specialization=job_obj.specialization,
             )
             session.add(new_job)
         return {"message": "Job created successfully"}
 
 
-@router.get("/get_jobs", response_model=List[JobGetSchema])
-async def get_jobs(db: AsyncSession = Depends(get_session)):
+@router.get("/get_free_jobs", response_model=List[JobGetSchema])
+async def get_free_jobs(db: AsyncSession = Depends(get_session)):
     async with db as session:
         async with session.begin():
-            query = select(Job)
+            query = (
+                select(Job, Partner.name)
+                .join(Partner, Job.company_id == Partner.partner_id).where(0.00 == Job.price)
+            )
             results = await session.execute(query)
-            jobs = results.scalars().all()
+            jobs_with_company = results.all()
+
+            jobs = [
+                JobGetSchema(
+                    job_id=job.job_id,
+                    image_filename=job.image_filename,
+                    title=job.title,
+                    company_name=company_name,
+                    details=job.details,
+                    duration=job.duration,
+                    level=job.level,
+                    price=job.price,
+                    specialization=job.specialization,
+                )
+                for job, company_name in jobs_with_company
+            ]
+
         return jobs
+
+
+@router.get("/specializations", response_model=List[JobGetSchema])
+async def get_jobs_by_specializations(specialization: str, db: AsyncSession = Depends(get_session)):
+    async with db as session:
+        async with session.begin():
+            query = (
+                select(Job, Partner.name)
+                .join(Partner, Job.company_id == Partner.partner_id)
+            ).where(specialization == Job.specialization)
+            results = await session.execute(query)
+            specialization_jobs = results.all()
+
+            jobs = [
+                JobGetSchema(
+                    job_id=job.job_id,
+                    image_filename=job.image_filename,
+                    title=job.title,
+                    company_name=company_name,
+                    details=job.details,
+                    duration=job.duration,
+                    level=job.level,
+                    price=job.price,
+                    specialization=job.specialization,
+                )
+                for job, company_name in specialization_jobs
+            ]
+
+        return jobs
+
+
+@router.get("/get_specialization")
+async def get_specialization(db: AsyncSession = Depends(get_session)):
+    async with db as session:
+        async with session.begin():
+            query = (
+                select(Job.specialization).distinct()
+            )
+            results = await session.execute(query)
+            specialization = results.scalars().all()
+        return specialization
 
 
 @router.post("/create_partner")

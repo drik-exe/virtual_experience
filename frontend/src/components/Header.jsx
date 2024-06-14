@@ -9,12 +9,12 @@ import {
     MenuDivider,
     MenuGroup,
     MenuItem,
-    MenuList, Stack,
+    MenuList, Spacer, Stack,
     Text, useColorMode, useDisclosure
 } from "@chakra-ui/react";
 import {ChevronDownIcon, HamburgerIcon, MoonIcon, SunIcon} from "@chakra-ui/icons";
 import {useEffect, useState} from "react";
-import {Link, Outlet} from "react-router-dom";
+import {createBrowserRouter, Link, Outlet} from "react-router-dom";
 import Footer from "./Footer.jsx";
 import axios from "axios";
 import {SiNetflix} from "react-icons/si";
@@ -29,6 +29,7 @@ function Header(props) {
     const [placement, setPlacement] = useState('right');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userAvatar, setUserAvatar] = useState("src/media/user-none.png");
+    const [specializations, setSpecialization] = useState([]);
 
     const MousePress = () => {
         setIsHovering(!isHovering);
@@ -52,11 +53,20 @@ function Header(props) {
             console.error("Ошибка при выходе:", error);
         }
     };
+    const fetchSpeciallization = async () => {
+        try {
+            const response = await axios.get('https://127.0.0.1:8000/jobs/get_specialization');
+            setSpecialization(response.data);
+        } catch (error) {
+            console.error("Ошибка при получении данных:", error);
+
+        }
+    };
 
 
     useEffect(() => {
         checkAuthStatus();
-
+        fetchSpeciallization();
     }, []);
 
     return (
@@ -83,9 +93,9 @@ function Header(props) {
                             </MenuButton>
                             <MenuList>
                                 <MenuGroup title="Симуляции работы">
-                                    <MenuItem>Банк и Финансы</MenuItem>
-                                    <MenuItem>ИТ</MenuItem>
-                                    <MenuItem>Закон</MenuItem>
+                                    {specializations.map((item, index) => (
+                                        <MenuItem key={index}>{item}</MenuItem>
+                                    ))}
                                 </MenuGroup>
                                 {/*<MenuDivider/>*/}
                             </MenuList>
@@ -154,9 +164,9 @@ function Header(props) {
                                 </MenuButton>
                                 <MenuList>
                                     <MenuGroup title="Симуляции работы">
-                                        <MenuItem>Банк и Финансы</MenuItem>
-                                        <MenuItem>ИТ</MenuItem>
-                                        <MenuItem>Закон</MenuItem>
+                                        {specializations.map((item, index) => (
+                                            <MenuItem key={index}>{item}</MenuItem>
+                                        ))}
                                     </MenuGroup>
                                     {/*<MenuDivider/>*/}
                                 </MenuList>
@@ -164,11 +174,12 @@ function Header(props) {
                             <Text>Блог</Text>
                             <Text>Для работодателей</Text>
                             <Text>Для преподавателей</Text>
+
                             {!isAuthenticated ? (
                                 <Link to="signup"><Button colorScheme="yellow">Регистрация</Button></Link>
                             ) : (
                                 <Flex>
-                                    <Button display={{base: 'none', md: 'block'}} colorScheme="yellow" mr={4}
+                                    <Button display={{ md: 'block'}} colorScheme="yellow" mr={4}
                                             onClick={handleLogout}>
                                         Выйти
                                     </Button>
