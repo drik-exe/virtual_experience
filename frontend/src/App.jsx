@@ -10,6 +10,7 @@ import Header from "./components/Header.jsx";
 import React, {useState} from "react";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LogInPage from "./pages/LogInPage.jsx";
+import JobSimulationPage from "./pages/JobSimulationsPage.jsx";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/" element={<Header renderHeader={renderHeader}></Header>}>
                     <Route index element={<HomePage appColorMode={appColorMode}/>}></Route>
                     {/*остальные адреса в этой вложенности можно без слеша*/}
+                    <Route path="job-simulations" element={<JobSimulationPage appColorMode={appColorMode}/>}></Route>
                 </Route>
                 <Route path="/signup" element={<SignUpPage/>}></Route>
                 <Route path="/login" element={<LogInPage/>}></Route>

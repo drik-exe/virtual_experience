@@ -105,7 +105,7 @@ function HomePage(props) {
 
 
     return (
-        <ChakraProvider>
+        <>
             <Box bg={bg[props.appColorMode]} p={8}>
                 <Flex direction={{base: 'column', md: 'row'}} align="center" justify="space-between"
                       maxW="1200px"
@@ -132,6 +132,7 @@ function HomePage(props) {
                            objectFit="contain"/>
                 </Flex>
             </Box>
+
             <Box bg="black" py={8}>
                 <Slider {...settings}>
                     {partnersImg.map((partnersImg, index) => (
@@ -166,14 +167,15 @@ function HomePage(props) {
                                     <Text mt={2}>{card.title}</Text>
                                     <Text mt={2} fontSize="sm" color="gray.500">{card.details}</Text>
                                     <Text mt={2} fontSize="sm" color="gray.500">{card.duration}</Text>
-                                    <Text mt={2} fontSize="sm" color="gray.500">{card.level} | {card.specialization}</Text>
+                                    <Text mt={2} fontSize="sm"
+                                          color="gray.500">{card.level} | {card.specialization}</Text>
                                 </Box>
                             </Box>
                         </Box>
                     ))}
                 </Slider>
             </Box>
-        </ChakraProvider>
+        </>
     );
 
     function SampleNextArrow(props) {

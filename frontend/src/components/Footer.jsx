@@ -11,7 +11,6 @@ import {FaLinkedin, FaInstagram, FaTelegram, FaGithub} from 'react-icons/fa';
 
 function Footer() {
   return (
-    <ChakraProvider>
       <Box as="footer" py={4} mt="auto" w="full">
           <Flex direction="column" align="center">
             <Text mb={2}>&copy; 2024 VE, Inc. All rights reserved.</Text>
@@ -31,7 +30,6 @@ function Footer() {
             </HStack>
           </Flex>
         </Box>
-    </ChakraProvider>
   );
 }
 

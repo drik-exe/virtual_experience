@@ -55,7 +55,7 @@ function Header(props) {
     };
     const fetchSpeciallization = async () => {
         try {
-            const response = await axios.get('https://127.0.0.1:8000/jobs/get_specialization');
+            const response = await axios.get('https://127.0.0.1:8000/jobs/get_specializations');
             setSpecialization(response.data);
         } catch (error) {
             console.error("Ошибка при получении данных:", error);
@@ -94,7 +94,7 @@ function Header(props) {
                             <MenuList>
                                 <MenuGroup title="Симуляции работы">
                                     {specializations.map((item, index) => (
-                                        <MenuItem key={index}>{item}</MenuItem>
+                                        <MenuItem key={index} as={Link} to={`job-simulations?specialization=${item}`}>{item}</MenuItem>
                                     ))}
                                 </MenuGroup>
                                 {/*<MenuDivider/>*/}

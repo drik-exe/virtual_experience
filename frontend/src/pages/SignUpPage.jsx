@@ -48,7 +48,6 @@ function SignUpPage() {
     };
 
     return (
-        <ChakraProvider>
             <Flex minH="100vh" align="center" justify="center">
                 <Box
                     p={8}
@@ -101,7 +100,6 @@ function SignUpPage() {
                     </form>
                 </Box>
             </Flex>
-        </ChakraProvider>
     );
 }
 

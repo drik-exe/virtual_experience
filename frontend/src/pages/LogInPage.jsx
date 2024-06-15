@@ -41,7 +41,6 @@ function LogInPage() {
 
 
     return (
-        <ChakraProvider>
             <Flex minH="100vh" align="center" justify="center">
                 <Box
                     p={8}
@@ -74,7 +73,6 @@ function LogInPage() {
                     </form>
                 </Box>
             </Flex>
-        </ChakraProvider>
     );
 }
 
