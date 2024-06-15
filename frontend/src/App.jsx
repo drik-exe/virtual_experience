@@ -15,18 +15,18 @@ import JobSimulationPage from "./pages/JobSimulationsPage.jsx";
 
 function App() {
 
-    const [appColorMode, setAppColorMode] = useState('light');
-    const renderHeader = (colorMode) => {
-        setAppColorMode(colorMode);
-    }
+    // const [appColorMode, setAppColorMode] = useState('light');
+    // const renderHeader = (colorMode) => {
+    //     setAppColorMode(colorMode);
+    // }
 
     return (
         <ChakraProvider>
             <Routes>
-                <Route path="/" element={<Header renderHeader={renderHeader}></Header>}>
-                    <Route index element={<HomePage appColorMode={appColorMode}/>}></Route>
+                <Route path="/" element={<Header ></Header>}>
+                    <Route index element={<HomePage />}></Route>
                     {/*остальные адреса в этой вложенности можно без слеша*/}
-                    <Route path="job-simulations" element={<JobSimulationPage appColorMode={appColorMode}/>}></Route>
+                    <Route path="job-simulations" element={<JobSimulationPage />}></Route>
                 </Route>
                 <Route path="/signup" element={<SignUpPage/>}></Route>
                 <Route path="/login" element={<LogInPage/>}></Route>

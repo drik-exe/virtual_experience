@@ -4,7 +4,7 @@ import {
     Flex,
     Text,
     Button,
-    Image, VStack,
+    Image, VStack, useColorModeValue,
 } from '@chakra-ui/react';
 import {ChevronLeftIcon, ChevronRightIcon} from '@chakra-ui/icons';
 import Slider from "react-slick";
@@ -15,7 +15,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 
-function HomePage(props) {
+function HomePage() {
     const settings = {
         dots: true,
         infinite: true,
@@ -106,7 +106,7 @@ function HomePage(props) {
 
     return (
         <>
-            <Box bg={bg[props.appColorMode]} p={8}>
+            <Box bg={useColorModeValue('#E6F0FA', 'gray.700')} p={8}>
                 <Flex direction={{base: 'column', md: 'row'}} align="center" justify="space-between"
                       maxW="1200px"
                       mx="auto">

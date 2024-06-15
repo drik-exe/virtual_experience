@@ -21,7 +21,7 @@ import {SiNetflix} from "react-icons/si";
 
 axios.defaults.withCredentials = true;
 
-function Header(props) {
+function Header() {
     const [isHovering, setIsHovering] = useState(false);
     // const {colorMode, toggleColorMode} = props;
     const {colorMode, toggleColorMode} = useColorMode();
@@ -190,9 +190,9 @@ function Header(props) {
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
-            {
-                props.renderHeader(colorMode)
-            }
+            {/*{*/}
+            {/*    props.renderHeader(colorMode)*/}
+            {/*}*/}
 
             <Outlet></Outlet>
 
