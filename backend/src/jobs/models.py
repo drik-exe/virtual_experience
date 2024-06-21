@@ -21,7 +21,7 @@ class Job(Base):
     level = Column(String, nullable=False)
     price: Decimal | float = Column(DECIMAL(precision=10, scale=2))
     company = relationship("Partner", back_populates="jobs")
-    specialization = Column(String, nullable=False)
+    specialization: str = Column(String, nullable=False)
 
 
 class Partner(Base):

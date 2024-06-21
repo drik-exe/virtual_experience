@@ -28,7 +28,9 @@ function Header() {
     const {isOpen, onOpen, onClose} = useDisclosure();
     const [placement, setPlacement] = useState('right');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userAvatar, setUserAvatar] = useState("src/media/user-none.png");
+    const [userAvatar, setUserAvatar] = useState('https://bit.ly/broken-link');
+    const [userFirstName, setUserFirstName] = useState('');
+    const [userLastName, setUserLastName] = useState('');
     const [specializations, setSpecialization] = useState([]);
 
     const MousePress = () => {
@@ -42,6 +44,9 @@ function Header() {
         if (user) {
             // Здесь можно установить ссылку на аватар пользователя, если у вас есть такая информация
             // Например: setUserAvatar('path-to-user-avatar.jpg');
+            console.log(user.data.first_name, user.data.last_name);
+            setUserFirstName(user.data.first_name);
+            setUserLastName(user.data.last_name);
         }
     };
 
@@ -76,9 +81,9 @@ function Header() {
                 <Flex h={16} alignItems="center" justifyContent="space-between">
                     <Box>
                         <Flex alignItems="center">
-                            <Box as="img" src="src/media/main-logo.png" alt="Logo" h={8}/>
+                            <Link to={'/'}><Box as="img" src="src/media/main-logo.png" alt="Logo" h={8}/></Link>
                             <Text fontSize="2xl" fontWeight="bold" ml={2}>
-                                VE
+                                <Link to={'/'}>VE</Link>
                             </Text>
                         </Flex>
                     </Box>
@@ -94,10 +99,10 @@ function Header() {
                             <MenuList>
                                 <MenuGroup title="Симуляции работы">
                                     {specializations.map((item, index) => (
-                                        <MenuItem key={index} as={Link} to={`job-simulations?specialization=${item}`}>{item}</MenuItem>
+                                        <MenuItem key={index} as={Link}
+                                                  to={`job-simulations?specialization=${item}`}>{item}</MenuItem>
                                     ))}
                                 </MenuGroup>
-                                {/*<MenuDivider/>*/}
                             </MenuList>
                         </Menu>
                         <Text mx={4}>Блог</Text>
@@ -130,12 +135,15 @@ function Header() {
                                     Выйти
                                 </Button>
                                 <Avatar
-                                    display={{base: 'none', md: 'block'}}
-                                    size="sm"
-                                    name="User"
-                                    borderRadius="0"
+                                    display={{base: 'none', md: 'flex'}}
+                                    // size="sm"
+                                    name={`${userFirstName} ${userLastName}`}
+                                    // borderRadius="0"
                                     src={userAvatar}
+                                    width={10}
+                                    height={10}
                                 ></Avatar>
+
                             </Flex>
                         )}
 
@@ -165,10 +173,10 @@ function Header() {
                                 <MenuList>
                                     <MenuGroup title="Симуляции работы">
                                         {specializations.map((item, index) => (
-                                            <MenuItem key={index}>{item}</MenuItem>
+                                            <MenuItem key={index} as={Link}
+                                                      to={`job-simulations?specialization=${item}`}>{item}</MenuItem>
                                         ))}
                                     </MenuGroup>
-                                    {/*<MenuDivider/>*/}
                                 </MenuList>
                             </Menu>
                             <Text>Блог</Text>
@@ -179,11 +187,17 @@ function Header() {
                                 <Link to="signup"><Button colorScheme="yellow">Регистрация</Button></Link>
                             ) : (
                                 <Flex>
-                                    <Button display={{ md: 'block'}} colorScheme="yellow" mr={4}
+                                    <Button display={{md: 'block'}} colorScheme="yellow" mr={4}
                                             onClick={handleLogout}>
                                         Выйти
                                     </Button>
-                                    <Avatar size="sm" name="User" borderRadius="0" src="src/media/user-none.png"/>
+                                    <Avatar
+
+                                        name={`${userFirstName} ${userLastName}`}
+                                        src={userAvatar}
+                                        width={10}
+                                        height={10}
+                                    ></Avatar>
                                 </Flex>
                             )}
                         </Stack>
